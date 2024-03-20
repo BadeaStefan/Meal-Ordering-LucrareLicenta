@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "email": "fein@yahoo.com",
+      "password": "$2b$12$QmZZM8p4sSuNdYMEnB0p/OZmfKihibhI9Fje7aeGBt5q77bV2Q9j2",
+      "id": "0dfaed91-7b0b-4faf-b55f-f379df7887e0",
+      "role": "admin"
+    },
+    {
+      "email": "suntjmecher@yahoo.com",
+      "password": "$2b$12$NxIQUY9/BwaHqrVx5CcZxuG/gtgspuCTIaEBsn4xbsHd2e88wHZ4O",
+      "id": "119ca580-e517-4ed4-89c0-679ca9f22c6d",
+      "role": "client"
+    }
+  ]
+}

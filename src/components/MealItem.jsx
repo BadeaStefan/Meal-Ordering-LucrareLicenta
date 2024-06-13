@@ -1,9 +1,14 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { currencyFormatter } from '../util/formatting.js';
 import Button from './UI/Button.jsx';
 import CartContext from '../store/CartContext.jsx';
 import { jwtDecode } from 'jwt-decode';
-export default function MealItem({ meal }) {
+import { Link } from 'react-router-dom';
+
+export default function MealItem({ meal, del }) {
+
+    
+
     const cartCtx = useContext(CartContext);
 
     const token = localStorage.getItem('token');
@@ -12,6 +17,16 @@ export default function MealItem({ meal }) {
     function handleAddMealToCart() {
         cartCtx.addItem(meal);
     }
+
+        function handleDeleteMeal() {
+            let id = meal.id;
+
+            fetch('http://localhost:3000/' + id, {
+                method: 'DELETE',
+            }).then(res => res.json()).catch(err => console.log(err));
+
+            
+        }
 
     return (
         <li className="meal-item">
@@ -26,8 +41,8 @@ export default function MealItem({ meal }) {
                     < Button onClick={handleAddMealToCart}>Add to Cart</Button>
                 </p>}
                 {userRole === 'admin' && <p className="meal-item-actions">
-                    <Button>Edit</Button>
-                    <Button>Delete</Button>
+                    <Link className="link-mode">Edit</Link>
+                    <Button className="link-mode" onClick={handleDeleteMeal}>Delete</Button>
                 </p>}
             </article>
         </li>

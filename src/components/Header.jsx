@@ -3,7 +3,7 @@ import logoImg from '../assets/logo.jpg';
 import Button from './UI/Button.jsx';
 import CartContext from '../store/CartContext';
 import UserProgressContext from '../store/UserProgressContext.jsx';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Header() {
@@ -27,6 +27,7 @@ export default function Header() {
         navigate('/');
     }
 
+
     return (
         <header id="main-header">
             <div id="title">
@@ -35,6 +36,7 @@ export default function Header() {
             </div>
             <nav>
                 {userRole === 'client' && < Button textOnly={true} onClick={handleShowCart}>Cart ({totalCartItems})</Button>}
+                {userRole === 'admin' && <Link to="/mealinfo" className="link-mode">Add Meal</Link>}
                 <Button onClick={handleLogout}>Logout</Button>
             </nav>
         </header>

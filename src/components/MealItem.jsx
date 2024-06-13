@@ -5,7 +5,7 @@ import CartContext from '../store/CartContext.jsx';
 import { jwtDecode } from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
-export default function MealItem({ meal, del }) {
+export default function MealItem({ meal, deleted}) {
 
     
 
@@ -41,7 +41,7 @@ export default function MealItem({ meal, del }) {
                     < Button onClick={handleAddMealToCart}>Add to Cart</Button>
                 </p>}
                 {userRole === 'admin' && <p className="meal-item-actions">
-                    <Link className="link-mode">Edit</Link>
+                    <Link to={`/edit/${meal.id}`} state={meal} className="link-mode">Edit</Link>
                     <Button className="link-mode" onClick={handleDeleteMeal}>Delete</Button>
                 </p>}
             </article>

@@ -1,8 +1,16 @@
-import { Form, useNavigate, Link, json, redirect } from 'react-router-dom';
+import { Form, useNavigate, Link, json, redirect, useLocation } from 'react-router-dom';
 import Button from './UI/Button';
 import { jwtDecode } from 'jwt-decode';
-export default function MealForm(meal, method) {
+
+
+
+export default function MealEditForm() {
     const navigate = useNavigate();
+    const { state } = useLocation();
+
+    const meal = state;
+
+    console.log(meal);
 
     const token = localStorage.getItem('token');
     const userRole = jwtDecode(token).role;
@@ -11,8 +19,9 @@ export default function MealForm(meal, method) {
         navigate('/auth');
     }
 
+
     return (
-        <Form method='post' className="form">
+        <Form method='patch' className="form">
             <p>
                 <label htmlFor="name">Name</label>
                 <input
@@ -20,7 +29,7 @@ export default function MealForm(meal, method) {
                     type="text"
                     name="name"
                     required
-                    defaultValue={meal ? meal.title : ''}
+                    defaultValue={meal ? meal.name : ''}
                 />
             </p>
             <p>
@@ -57,14 +66,15 @@ export default function MealForm(meal, method) {
                 <Link to="/meals" className="link-mode">Cancel</Link>
                 <Button>Save</Button>
             </div>
-		</Form>
-	);
+        </Form>
+    );
 }
 
+export async function action({ request, params }){
 
-export async function action({ request, params }) {
     const data = await request.formData();
-    const method = request.method;
+
+    const mealId = params;
 
     const mealData = {
         name: data.get('name'),
@@ -72,10 +82,10 @@ export async function action({ request, params }) {
         price: data.get('price'),
         description: data.get('description'),
     }
-    
 
-    const response = await fetch('http://localhost:3000/addmeal', {
-        method: method,
+
+    const response = await fetch('http://localhost:3000/' + mealId.id, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(mealData),
     });

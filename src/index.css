@@ -277,7 +277,7 @@ h1 {
 .form {
     position: relative;
     z-index: 1;
-    background-color:cadetblue;
+    background-color: #D2B48C;
     max-width: 360px;
     margin: 0 auto 100px;
     padding: 45px;
@@ -298,7 +298,7 @@ h1 {
     }
 
     .form .message {
-        margin: 15px 0 0;
+        margin: 15px;
         color: #b3b3b3;
         font-size: 12px;
         color:darkslategray;
@@ -308,22 +308,26 @@ h1 {
         margin:10px;
     }
 
-    .link-mode {
-        background-color: #ffc404;
-        border: 1px solid #ffc404;
-        color: #1f1a09;
-        padding: 0.5rem 1.5rem;
-        border-radius: 4px;
-        display:block;
-        margin:4px;
-        text-decoration:none;
-    }
+.link-mode {
+    font: inherit;
+    font-size:21px;
+    cursor: pointer;
+    background-color: #ffc404;
+    border: 1px solid #ffc404;
+    color: #1f1a09;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    margin: 10px;
+    text-decoration:none;
+}
+        .link-mode:hover {
+            background-color: #ffab04;
+            border-color: #ffab04;
+            color: #1f1a09;
+        }
 
 .welcome-div {
-    background-image: url("./assets/home.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
+   
     display: flex;
     flex-direction: column;
     align-items: center;

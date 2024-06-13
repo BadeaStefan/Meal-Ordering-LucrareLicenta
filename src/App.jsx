@@ -3,6 +3,11 @@ import MealsPage from "./pages/MealsPage.jsx";
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import WelcomePage from "./pages/WelcomePage.jsx";
 import { checkAuthLoader } from './util/auth.js';
+import MealInfoPage from "./pages/MealInfoPage.jsx";
+import { action as mealAction } from './components/MealForm.jsx';
+import EditMealPage from './pages/EditMealPage.jsx'
+import { action as editAction } from './components/MealEditForm.jsx';
+
 
 
 const router = createBrowserRouter([
@@ -21,6 +26,17 @@ const router = createBrowserRouter([
         element: <AuthenticationPage></AuthenticationPage>,
         action: authAction,
     },
+    {
+        path: '/mealinfo',
+        element: <MealInfoPage></MealInfoPage>,
+        action: mealAction,
+    },
+    {
+        path: '/edit/:id',
+        element: <EditMealPage></EditMealPage>,
+        action: editAction,
+    }
+
 ]);
 
 function App() {

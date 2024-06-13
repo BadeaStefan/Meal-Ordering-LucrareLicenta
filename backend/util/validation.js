@@ -14,3 +14,9 @@ export function isValidImageUrl(value) {
 export function isValidEmail(value) {
     return value && value.includes('@');
 }
+
+export function isValidPrice(value) {
+    return value && value !== 0;
+}
+
+

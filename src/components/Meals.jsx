@@ -10,12 +10,6 @@ export default function Meals() {
     }*/
     const [loadedMeals, setLoadedMeals] = useState([]);
 
-    const [deleting, setDeleting] = useState(false);
-
-    function handlerDelete() {
-        setDeleting(true);
-    }
-
     useEffect(() => {
         async function fetchMeals() {
             const resData = await fetch('http://localhost:3000/meals');
@@ -29,7 +23,7 @@ export default function Meals() {
 
     return (
         <ul id="meals">{loadedMeals.map(meal => (
-            <MealItem key={meal.id} meal={meal} del={handlerDelete}></MealItem>))}
+            <MealItem key={meal.id} meal={meal}></MealItem>))}
         </ul>
     );
 }

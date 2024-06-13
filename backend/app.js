@@ -2,8 +2,9 @@ import fs from 'node:fs/promises';
 import bodyParser from 'body-parser';
 import express from 'express';
 import { add as add, get as get } from './data/user.js';
-import { createJSONToken as createJSONToken, isValidPassword as isValidPassword} from './util/auth.js';
-import { isValidEmail as isValidEmail, isValidText as isValidText } from './util/validation.js';
+import { createJSONToken as createJSONToken, isValidPassword as isValidPassword } from './util/auth.js';
+import { isValidEmail as isValidEmail, isValidText as isValidText, isValidPrice as isValidPrice } from './util/validation.js';
+import { addMeal as addMeal, remove as remove, replace as replace } from './data/utilMeals.js';
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
+
+app.listen(3000);
 
 app.post('/signup', async (req, res, next) => {
     const data = req.body;
@@ -121,7 +124,88 @@ app.post('/orders', async (req, res) => {
   res.status(201).json({ message: 'Order created!' });
 });
 
+app.post('/addmeal', async (req, res, next) => {
+    const mealData = req.body;
+
+    let errors = {};
+
+    if (!isValidText(mealData.name)) {
+        errors.name = 'Invalid name';
+    }
+
+    if (!isValidText(mealData.description)) {
+        errors.description = 'Invalid description';
+    }
+
+    if (!isValidPrice(mealData.price)) {
+        errors.price = 'Invalid price';
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return res.status(422).json({
+            message: 'Adding the meal failed due to verification errors.',
+            errors,
+        })
+    }
+
+    try {
+        await addMeal(mealData);
+        res.status(201).json({ message: 'Meal saved.', meal: mealData });
+    } catch (error) {
+        next(error);
+    }
+
+});
+
+app.patch('/:id', async (req, res, next) => {
+    const mealData = req.body;
+    
+    let errors = {};
+
+    if (!isValidText(mealData.name)) {
+        errors.name = 'Invalid name';
+    }
+
+    if (!isValidText(mealData.description)) {
+        errors.description = 'Invalid description';
+    }
+
+    if (!isValidPrice(mealData.price)) {
+        errors.price = 'Invalid price';
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return res.status(422).json({
+            message: 'Updating the meal failed due to verification errors.',
+            errors,
+        })
+    }
+
+    try {
+        await replace(req.params.id, mealData);
+        res.json({ message: 'Meal updated.', meal: mealData });
+    } catch (error) {
+        next(error);
+    }
+
+})
+
+app.delete('/:id', async (req, res, next) => {
+    
+    try {
+        await remove(req.params.id);
+        res.json({ message: 'Meal deleted.' });
+    } catch (error) {
+        next(error);
+    }
+})
+
 app.use((req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT,DELETE,PATCH");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
   if (req.method === 'OPTIONS') {
     return res.sendStatus(200);
   }
@@ -129,4 +213,3 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
 });
 
-app.listen(3000);

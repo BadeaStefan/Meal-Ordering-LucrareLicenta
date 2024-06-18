@@ -71,9 +71,7 @@ export default function MealEditForm() {
 }
 
 export async function action({ request, params }){
-
     const data = await request.formData();
-
     const mealId = params;
 
     const mealData = {
@@ -82,7 +80,6 @@ export async function action({ request, params }){
         price: data.get('price'),
         description: data.get('description'),
     }
-
 
     const response = await fetch('http://localhost:3000/' + mealId.id, {
         method: 'PATCH',

@@ -3,8 +3,8 @@
     "",
     "\\src",
     "\\src\\components",
-    "\\src\\pages"
+    "\\src\\store"
   ],
-  "SelectedNode": "\\src\\components\\MealItem.jsx",
+  "SelectedNode": "\\src\\components\\Meals.jsx",
   "PreviewInSolutionExplorer": false
 }
